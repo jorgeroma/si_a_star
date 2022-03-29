@@ -1,22 +1,24 @@
-import algoritmoA_Estrella.AEstrella;
+import algoritmos.AEstrella;
 import heuristicos.Heuristico;
 import laberinto.Laberinto;
-import nodo.Nodo;
-
-import java.util.Set;
 
 public class MainPruebas {
+    private static final int LAB = 5;
+    private static final int SINSOL = 7;
     public static void main(String[] args) {
-        Laberinto lab = new Laberinto(6,8,30);
-        lab.generarLaberinto();
-        Heuristico heu = new Heuristico(lab);
-        AEstrella alg = new AEstrella(lab, heu.manhat());
-        System.out.println(lab.toString());
-        alg.ejecutar(lab);
-        System.out.println("Solucion: " + alg.solucion);
+        Laberinto lab = new Laberinto(6,8,30, 5);
+        // Opt 0: aleat Opt 1: extremos | (I/G)
+        if (!lab.generarLaberinto(0)) { // generalLaberinto devuelve 'solucionable'
+            return;
+        }
 
-        System.out.println("Nodo inicial: " + lab.getInicial().toString());
-        System.out.println("Nodo objetivo: " + lab.getObjetivo().toString());
+        // .ampl() .manhat() .eucl()
+        AEstrella alg = new AEstrella(lab, (new Heuristico(lab)).ampl());
+        System.out.println("Laberinto generado:\n" + lab.toString());
+
+        System.out.print("Nodo inicial: " + lab.getInicial().toString());
+        System.out.println(" -> Nodo objetivo: " + lab.getObjetivo().toString());
+        /*
         System.out.println("Nodos abiertos (nodo inicial): " + alg.abiertos.toString());
         assert alg.abiertos.peek() != null;
         System.out.println("Sucesores ini: " + alg.sucesores(alg.abiertos.peek(), lab).toString());
@@ -26,7 +28,7 @@ public class MainPruebas {
         for (Nodo n : alg.sucesores(alg.abiertos.peek(), lab)) {
             System.out.print(n.getCosteG() + " ");
         }
-        System.out.println();
+        System.out.println("\nOrden: Arriba Derecha Abajo Izquierda");
         assert alg.abiertos.peek() != null;
         int cnt = 0;
         for (Nodo n : alg.sucesores(alg.abiertos.peek(), lab)) {
@@ -38,6 +40,16 @@ public class MainPruebas {
             M.removeAll(alg.antecesores(n));
             System.out.println("\tSucesores sin antecesores: " + M.toString());
             cnt++;
+        } */
+
+        alg.ejecutar(lab);
+        if (lab.getSolucionable()) {
+            System.out.println("El laberinto tiene solucion:");
+            lab.printSolucion(alg.solucion);
+            System.out.println("Solucion: " + alg.solucion);
+        } else {
+            System.out.println(lab.toString());
+            System.out.println("El laberinto no tiene solucion: posicion G inaccesible");
         }
     }
 }

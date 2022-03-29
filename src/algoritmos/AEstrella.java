@@ -1,4 +1,4 @@
-package algoritmoA_Estrella;
+package algoritmos;
 
 import laberinto.Laberinto;
 import nodo.Nodo;
@@ -23,29 +23,6 @@ public class AEstrella {
         return n.mismaPos(lab.getObjetivo());
     }
 
-//    public List<Nodo> ejecutar(Laberinto lab) {
-//        if (abiertos.isEmpty()) {
-//            return null;
-//        } else {
-//            Nodo node = abiertos.poll();
-//            cerrados.add(node);
-//            if (objetivo(node)) {
-//
-//            } else {
-//                Set<Nodo> M = sucesores(node, lab);
-//                M.removeAll(antecesores(node));
-//                for (Nodo n : M) {
-//                    if (!abiertos.contains(n) && !cerrados.contains(n)) {
-//                        n.setPadre(node);
-//                        abiertos.add(n);
-//                    } else {
-//
-//                    }
-//                }
-//            }
-//        }
-//    }
-
     public void ejecutar(Laberinto lab) {
         while (!abiertos.isEmpty()) {
             Nodo act = abiertos.poll();
@@ -63,12 +40,14 @@ public class AEstrella {
                 }
             }
         }
+        lab.setSolucionable(solucion != null);
     }
 
     private List<Nodo> camino(Nodo act) {
         List<Nodo> sol = new ArrayList<>();
         while (act.getPadre() != null) {
             sol.add(act);
+            act = act.getPadre();
         }
         return sol;
     }
@@ -105,7 +84,7 @@ public class AEstrella {
         if (node.getCordX() - 1 >= 0 && matriz[node.getCordY()][node.getCordX() - 1] != '*') {
             suc.add(new Nodo(node.getCordX() - 1, node.getCordY(), node));
         }
-        if (suc.isEmpty()) lab.setSolucionable(false);
         return suc;
     }
+
 }

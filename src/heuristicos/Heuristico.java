@@ -15,8 +15,8 @@ public class Heuristico {
         return new Comparator<Nodo>() {
             @Override
             public int compare(Nodo o1, Nodo o2) {
-                return 0;
-//                return Integer.compare(o1.getCosteG(), o2.getCosteG());
+                // h == 0 -> solo comparo g(n)
+                return Integer.compare(o1.getCosteG(), o2.getCosteG());
             }
         };
     }
@@ -28,6 +28,7 @@ public class Heuristico {
             }
             @Override
             public int compare(Nodo o1, Nodo o2) {
+                // h(n) dist. manhat.
                 return Integer.compare(o1.getCosteG() + h(o1), o2.getCosteG() + h(o2));
             }
         };
@@ -40,6 +41,7 @@ public class Heuristico {
             }
             @Override
             public int compare(Nodo o1, Nodo o2) {
+                // h(n) dist. eucl.
                 return Double.compare(o1.getCosteG() + h(o1), o2.getCosteG() + h(o2));
             }
         };

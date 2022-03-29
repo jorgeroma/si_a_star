@@ -11,8 +11,7 @@ public class Nodo {
     public Nodo(int cordX, int cordY, Nodo padre) {
         this.cordX = cordX;
         this.cordY = cordY;
-//        this.costeG = coste(padre);
-        this.costeG = 1 + (padre == null ? -1 : padre.getCosteG());
+        this.costeG = (padre == null) ? -1 : 1 + padre.getCosteG();
         this.padre = padre;
     }
 
@@ -29,7 +28,6 @@ public class Nodo {
     }
 
     public int getCosteG() {
-//        return coste(this);
         return this.costeG;
     }
 
@@ -37,25 +35,9 @@ public class Nodo {
         return padre;
     }
 
-    public void setCordX(int cordX) {
-        this.cordX = cordX;
-    }
-
-    public void setCordY(int cordY) {
-        this.cordY = cordY;
-    }
-
     public void setPadre(Nodo padre) {
         this.padre = padre;
     }
-
-//    private int coste(Nodo n) {
-//        if (n == null) {
-//            return -1;
-//        } else {
-//            return coste(n.padre) + 1;
-//        }
-//    }
 
     public boolean mismaPos(Nodo n) {
         return this.cordX == n.cordX && this.cordY == n.cordY;
@@ -72,13 +54,19 @@ public class Nodo {
     @Override
     public int hashCode() {
         return Objects.hash(cordX, cordY);
-//        return Integer.hashCode(cordX) + Integer.hashCode(cordY);
     }
 
     @Override
     public String toString() {
         return "(" + cordX + ", " + cordY + ")";
     }
+
+//----Si no almacenace costeG:
+//    private int coste(Nodo n) {
+//        if (n == null) {
+//            return -1;
+//        } else {
+//            return coste(n.padre) + 1;
+//        }
+//    }
 }
-
-

@@ -1,37 +1,34 @@
 package laberinto;
 
-import algoritmoA_Estrella.AEstrella;
 import nodo.Nodo;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 public class Laberinto {
     private int dimensionX, dimensionY;
     private char[][] matriz;
     private int prb;
     private int iniX, iniY, objX, objY;
-    private int seed;
-    private Random rnd;
     private boolean solucionable;
+    private Random rnd;
 
     public Laberinto(int dimensionX, int dimensionY, int prb, int seed) {
         this.dimensionX = dimensionX;
         this.dimensionY = dimensionY;
         matriz = new char[dimensionX][dimensionY];
-        rnd = new Random(seed);
         this.prb = prb;
+        solucionable = true;
+        rnd = new Random(seed);
     }
 
     public Laberinto(int dimensionX, int dimensionY, int prb) {
-//        this(dimensionX, dimensionY, prb, );
         this.dimensionX = dimensionX;
         this.dimensionY = dimensionY;
         matriz = new char[dimensionX][dimensionY];
-        rnd = new Random();
         this.prb = prb;
+        solucionable = true;
+        rnd = new Random();
     }
 
     public Nodo getInicial() {
@@ -46,21 +43,43 @@ public class Laberinto {
         return matriz;
     }
 
+    public boolean getSolucionable() {
+        return solucionable;
+    }
+
     public void setSolucionable(boolean solucionable) {
         this.solucionable = solucionable;
     }
 
-    public void generarLaberinto() {
-        Random rnd = new Random();
+    public boolean generarLaberinto(int opt) {
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[0].length; j++) {
                 matriz[i][j] = (rnd.nextInt(100) < prb) ? '*' : ' ';
             }
         }
-        colocarIniObj(matriz, rnd);
+        boolean flag = true;
+        switch (opt) {
+            case 0 -> colocarIniObj(matriz);
+            case 1 -> colocarIniObjExtremos(matriz);
+            default -> {
+                System.err.println("Opt " + opt + " no disponible - (0/1)");
+                flag = false;
+            }
+        }
+        return flag;
     }
 
-    private void colocarIniObj(char[][] matriz, Random rnd) {
+    private void colocarIniObjExtremos(char[][] matriz) {
+        iniX = 0;
+        iniY = 0;
+        matriz[0][0] = 'I';
+
+        objX = matriz[0].length - 1;
+        objY = matriz.length - 1;
+        matriz[matriz.length - 1][matriz[0].length - 1] = 'G';
+    }
+
+    private void colocarIniObj(char[][] matriz) {
         do {
             iniX = rnd.nextInt(matriz[0].length);
             iniY = rnd.nextInt(matriz.length);
@@ -73,21 +92,22 @@ public class Laberinto {
         matriz[objY][objX] = 'G';
     }
 
-    // FIXME
-    public void printSolucion(ArrayList<Nodo> solucion) {
-//        StringBuilder sb = new StringBuilder("Solucion(");
-//        for (Nodo n : solucion) {
-//            sb.append(" ").append(n.toString()).append(" ");
+    public void printSolucion(List<Nodo> solucion) {
+        // Empiezo en 1 para no sobrescribir el nodo correspondiente a G
+        for (int i = 1; i < solucion.size(); i++) {
+            Nodo n = solucion.get(i);
+            matriz[n.getCordY()][n.getCordX()] = '+';
+        }
+        // (Opcional) Muestra por pantalla unicamente el camino de I a G
+//        for (int i = 0; i < matriz.length; i++) {
+//            for (int j = 0; j < matriz[0].length; j++) {
+//                if (matriz[i][j] == '*') {
+//                    matriz[i][j] = ' ';
+//                }
+//            }
 //        }
-//        System.out.println(sb.toString());
-//        System.out.println(")");
+        System.out.println(this);
     }
-
-//    public void pintarSolucion(List<Nodo> solucion){
-//        for (Nodo nodo : solucion) {
-//            matrix[nodo.getY()][nodo.getX()] = '+';
-//        }
-//    }
 
     @Override
     public String toString() {
@@ -100,5 +120,4 @@ public class Laberinto {
         }
         return sb.toString();
     }
-
 }
