@@ -34,6 +34,14 @@ public class Laberinto {
         this.prb = prb;
     }
 
+    public Nodo getInicial() {
+        return new Nodo(iniX, iniY);
+    }
+
+    public Nodo getObjetivo() {
+        return new Nodo(objX, objY);
+    }
+
     public char[][] getMatriz() {
         return matriz;
     }
@@ -66,13 +74,13 @@ public class Laberinto {
     }
 
     // FIXME
-    public void mostrarSolucion(ArrayList<Nodo> solucion) {
-        StringBuilder sb = new StringBuilder("Solucion(");
-        for (Nodo n : solucion) {
-            sb.append(" ").append(n.toString()).append(" ");
-        }
-        System.out.println(sb.toString());
-        System.out.println(")");
+    public void printSolucion(ArrayList<Nodo> solucion) {
+//        StringBuilder sb = new StringBuilder("Solucion(");
+//        for (Nodo n : solucion) {
+//            sb.append(" ").append(n.toString()).append(" ");
+//        }
+//        System.out.println(sb.toString());
+//        System.out.println(")");
     }
 
 //    public void pintarSolucion(List<Nodo> solucion){
@@ -93,36 +101,4 @@ public class Laberinto {
         return sb.toString();
     }
 
-    public static void main(String[] args) {
-        Laberinto lab = new Laberinto(6,8,30);
-        lab.generarLaberinto();
-        AEstrella alg = new AEstrella(new Nodo(lab.iniX, lab.iniY, null));
-//        aEstrella(lab);
-        System.out.println(lab.toString());
-
-        System.out.println("Nodo inicial: " + (new Nodo(lab.iniX, lab.iniY, null)).toString());
-        System.out.println("Nodo objetivo: " + (new Nodo(lab.objX, lab.objY, null)).toString());
-        System.out.println("Nodos abiertos (nodo inicial): " + alg.abiertos.toString());
-        assert alg.abiertos.peek() != null;
-        System.out.println("Sucesores ini: " + alg.sucesores(alg.abiertos.peek(), lab).toString());
-        assert alg.abiertos.peek() != null;
-        System.out.print("Costes g(n): " + alg.abiertos.peek().getCosteG() + " ");
-        assert alg.abiertos.peek() != null;
-        for (Nodo n : alg.sucesores(alg.abiertos.peek(), lab)) {
-            System.out.print(n.getCosteG() + " ");
-        }
-        System.out.println();
-        assert alg.abiertos.peek() != null;
-        int cnt = 0;
-        for (Nodo n : alg.sucesores(alg.abiertos.peek(), lab)) {
-//            System.out.println(n.toString() + ": " + alg.antecesores(n).toString());
-            System.out.println(n.toString() + ": ");
-            Set<Nodo> M = alg.sucesores(n, lab);
-            System.out.println("\tSucesores: " + M.toString());
-            System.out.println("\tAntecesores: " + alg.antecesores(n));
-            M.removeAll(alg.antecesores(n));
-            System.out.println("\tSucesores sin antecesores: " + M.toString());
-            cnt++;
-        }
-    }
 }

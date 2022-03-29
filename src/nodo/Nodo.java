@@ -6,15 +6,18 @@ public class Nodo {
     private int cordX;
     private int cordY;
     private int costeG;
-    private int costeF;
     private Nodo padre;
 
     public Nodo(int cordX, int cordY, Nodo padre) {
         this.cordX = cordX;
         this.cordY = cordY;
 //        this.costeG = coste(padre);
-        this.costeG = 1 + (padre == null ? 0 : padre.getCosteG());
+        this.costeG = 1 + (padre == null ? -1 : padre.getCosteG());
         this.padre = padre;
+    }
+
+    public Nodo(int cordX, int cordY) {
+        this(cordX, cordY, null);
     }
 
     public int getCordX() {
@@ -28,10 +31,6 @@ public class Nodo {
     public int getCosteG() {
 //        return coste(this);
         return this.costeG;
-    }
-
-    public int getCosteFunc() {
-        return costeF;
     }
 
     public Nodo getPadre() {

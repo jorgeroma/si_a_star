@@ -8,18 +8,19 @@ import java.util.*;
 public class AEstrella {
     public Queue<Nodo> abiertos;
     public List<Nodo> cerrados;
+    public Laberinto lab;
+    public List<Nodo> solucion;
 
-    public AEstrella(Nodo inicial) {
-        abiertos = new PriorityQueue<>(11, new Comparator<Nodo>() {
-            @Override
-            public int compare(Nodo o1, Nodo o2) {
-                return Integer.compare(o1.getCosteFunc(), o2.getCosteFunc());
-            }
-        });
-        abiertos.add(inicial);
+    public AEstrella(Laberinto lab, Comparator<Nodo> heuristico) {
+        this.lab = lab;
+        abiertos = new PriorityQueue<>(heuristico);
+        abiertos.add(lab.getInicial());
         cerrados = new ArrayList<>();
-//        abiertos.sort(Comparator.comparingInt(Nodo::getCosteFunc));
-//        abiertos.sort((o1, o2) -> Integer.compare(o1.getCosteFunc(), o2.getCosteFunc()));
+        solucion = null;
+    }
+
+    boolean objetivo(Nodo n) {
+        return n.mismaPos(lab.getObjetivo());
     }
 
 //    public List<Nodo> ejecutar(Laberinto lab) {
@@ -44,6 +45,33 @@ public class AEstrella {
 //            }
 //        }
 //    }
+
+    public void ejecutar(Laberinto lab) {
+        while (!abiertos.isEmpty()) {
+            Nodo act = abiertos.poll();
+            cerrados.add(act);
+            if (objetivo(act)) {
+                solucion = camino(act);
+            } else {
+                Set<Nodo> M = sucesores(act, lab);
+                M.removeAll(antecesores(act));
+                for (Nodo n : M) {
+                    if (!abiertos.contains(n) && !cerrados.contains(n)) {
+                        n.setPadre(act);
+                        abiertos.add(n);
+                    }
+                }
+            }
+        }
+    }
+
+    private List<Nodo> camino(Nodo act) {
+        List<Nodo> sol = new ArrayList<>();
+        while (act.getPadre() != null) {
+            sol.add(act);
+        }
+        return sol;
+    }
 
     public Set<Nodo> antecesores(Nodo node) {
         return antecesoresRec(node, new HashSet<>());
