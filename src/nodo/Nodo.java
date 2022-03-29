@@ -48,5 +48,13 @@ public class Nodo {
         this.costeG = padre.getCosteG()+1;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Nodo node) {
+            return this.mismaPos(node);
+        }
+        return false;
+    }
+
 
 }
