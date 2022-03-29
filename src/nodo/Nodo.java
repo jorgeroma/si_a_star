@@ -56,5 +56,8 @@ public class Nodo {
         return false;
     }
 
-
+    @Override
+    public String toString() {
+        return "(" + cordX + ", " + cordY + ')';
+    }
 }

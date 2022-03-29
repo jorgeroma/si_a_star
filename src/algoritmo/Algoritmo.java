@@ -4,17 +4,21 @@ import laberinto.Laberinto;
 import nodo.Nodo;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class Algoritmo {
-    private List<Nodo> abiertos;
+//    private List<Nodo> abiertos;
+    PriorityQueue<Nodo> abiertos;
     private List<Nodo> cerrados;
     private Laberinto laberinto;
     private Nodo objetivo;
     private int h = 0;
-    public Algoritmo(Laberinto laberinto, int h){
+    public Algoritmo(Laberinto laberinto, int h, Comparator<Nodo> heuristico){
         this.laberinto = laberinto;
-        abiertos = new ArrayList<>();
+//        abiertos = new ArrayList<>();
+        abiertos = new PriorityQueue<>(heuristico);
         cerrados = new ArrayList<>();
         this.h = h;
         objetivo = laberinto.getNodoFin();
@@ -24,8 +28,9 @@ public class Algoritmo {
         abiertos.add(laberinto.getNodoInicio());
         Nodo abrir;
         while (!abiertos.isEmpty()){
-            abrir = abiertos.get(0);
-            abiertos.remove(0);
+//            abrir = abiertos.get(0);
+            abrir = abiertos.poll();
+//            abiertos.remove(0);
             cerrados.add(abrir);
 
             if(abrir.equals(objetivo)){
@@ -37,7 +42,7 @@ public class Algoritmo {
         }
 
         //TODO paso 3 - Fracaso
-        return abiertos;
+        return new ArrayList<Nodo>();
     }
 
     private void expandir(Nodo nodo){

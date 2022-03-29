@@ -2,6 +2,7 @@ package laberinto;
 
 import nodo.Nodo;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -11,6 +12,7 @@ public class Laberinto {
     private char[][] matrix;
     private Random ran;
     private boolean solucionado = true;
+    private List<Nodo> sol;
 
     public Laberinto(int dimensionX, int dimensionY, int prb, int seed){
         this.dimensionX = dimensionX;
@@ -84,31 +86,37 @@ public class Laberinto {
     @Override
     public String toString(){
         String salida = new String();
+        for (int i = 0;i<dimensionX; i++){
+            salida += "_ ";
+        }
+        salida += '\n';
         for(int i = 0; i < matrix.length; i++){
+            salida += "| ";
             for (char j : matrix[i]){
                 salida += j;
                 salida += ' ';
             }
-//            salida += Arrays.toString(matrix[i]);
+            salida += "| ";
+
             salida += "\n";
         }
-//        if(solucionado){
-//            return salida;
-//        }else{
-//            salida;
-//        }
-        return solucionado ? salida : (salida + "NO SOLUCIONABLE");
+        for (int i = 0;i<dimensionX; i++){
+            salida += "_ ";
+        }
+        salida += '\n';
+        return solucionado ? (salida + "\n" + sol) : (salida + "NO SOLUCIONABLE");
     }
 
     public void pintarSolucion(List<Nodo> solucion){
         if(solucion.isEmpty()){
             solucionado = false;
-        }
+        }else sol = solucion;
+
         Iterator<Nodo> it = solucion.iterator();
         Nodo temp;
         while (it.hasNext()){
             temp = it.next();
-            matrix[temp.getY()][temp.getX()] = '+';
+            matrix[temp.getY()][temp.getX()] = 'o';
         }
         matrix[iniY][iniX] = 'I';
         matrix[objY][objX] = 'G';
