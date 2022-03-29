@@ -1,52 +1,85 @@
 package nodo;
 
+import java.util.Objects;
+
 public class Nodo {
-    private final int cordX, cordY;
+    private int cordX;
+    private int cordY;
     private int costeG;
+    private int costeF;
     private Nodo padre;
 
-    public Nodo(int cordX, int cordY, Nodo padre){
+    public Nodo(int cordX, int cordY, Nodo padre) {
         this.cordX = cordX;
         this.cordY = cordY;
-        this.padre = padre;
+//        this.costeG = coste(padre);
         this.costeG = 1 + (padre == null ? 0 : padre.getCosteG());
+        this.padre = padre;
     }
 
-    public Nodo(int cordX, int cordY){
-        this.cordX = cordX;
-        this.cordY = cordY;
-        this.padre = null;
-        this.costeG = 0;
+    public int getCordX() {
+        return cordX;
     }
 
-    public boolean mismaPos(Nodo nodo){
-        return this.cordX == nodo.getX() && this.cordY == nodo.getY();
+    public int getCordY() {
+        return cordY;
     }
 
-    public int getX(){
-        return this.cordX;
-    }
-
-    public int getY(){
-        return this.cordY;
-    }
-
-    public Nodo getPadre(){
-        return this.padre;
-    }
-
-//    public void setCosteG(int coste){
-//        this.costeG = coste;
-//    }
-
-    public int getCosteG(){
+    public int getCosteG() {
+//        return coste(this);
         return this.costeG;
     }
 
-    public void setPadre(Nodo padre){
-        this.padre = padre;
-        this.costeG = padre.getCosteG()+1;
+    public int getCosteFunc() {
+        return costeF;
     }
 
+    public Nodo getPadre() {
+        return padre;
+    }
 
+    public void setCordX(int cordX) {
+        this.cordX = cordX;
+    }
+
+    public void setCordY(int cordY) {
+        this.cordY = cordY;
+    }
+
+    public void setPadre(Nodo padre) {
+        this.padre = padre;
+    }
+
+//    private int coste(Nodo n) {
+//        if (n == null) {
+//            return -1;
+//        } else {
+//            return coste(n.padre) + 1;
+//        }
+//    }
+
+    public boolean mismaPos(Nodo n) {
+        return this.cordX == n.cordX && this.cordY == n.cordY;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Nodo node) {
+            return this.mismaPos(node);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cordX, cordY);
+//        return Integer.hashCode(cordX) + Integer.hashCode(cordY);
+    }
+
+    @Override
+    public String toString() {
+        return "(" + cordX + ", " + cordY + ")";
+    }
 }
+
+

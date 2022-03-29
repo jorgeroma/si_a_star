@@ -1,88 +1,128 @@
 package laberinto;
 
+import algoritmoA_Estrella.AEstrella;
 import nodo.Nodo;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class Laberinto {
-    private int dimensionX, dimensionY, prb, iniX, iniY, objX, objY;
-    private char[][] matrix;
+    private int dimensionX, dimensionY;
+    private char[][] matriz;
+    private int prb;
+    private int iniX, iniY, objX, objY;
+    private int seed;
+    private Random rnd;
     private boolean solucionable;
-    private Random ran;
 
-    public Laberinto(int dimensionX, int dimensionY, int prb, int seed){
+    public Laberinto(int dimensionX, int dimensionY, int prb, int seed) {
         this.dimensionX = dimensionX;
         this.dimensionY = dimensionY;
+        matriz = new char[dimensionX][dimensionY];
+        rnd = new Random(seed);
         this.prb = prb;
-        ran = new Random(seed);
-        this.generarLaberinto();
     }
 
-    public Laberinto(int dimensionX, int dimensionY, int prb){
+    public Laberinto(int dimensionX, int dimensionY, int prb) {
+//        this(dimensionX, dimensionY, prb, );
         this.dimensionX = dimensionX;
         this.dimensionY = dimensionY;
+        matriz = new char[dimensionX][dimensionY];
+        rnd = new Random();
         this.prb = prb;
-        ran = new Random();
-        this.generarLaberinto();
     }
 
-    private void generarLaberinto(){
-        matrix = new char[this.dimensionY][this.dimensionX];
-        generarObstaculos();
-        generarInicioFin();
+    public char[][] getMatriz() {
+        return matriz;
     }
 
-    private void generarObstaculos(){
-        for(int i = 0; i < matrix.length; i++){
-            for(int j = 0; j < matrix[i].length; j++){
-                matrix[i][j] = (ran.nextInt() < prb/100 ? '*' : ' ' );
+    public void setSolucionable(boolean solucionable) {
+        this.solucionable = solucionable;
+    }
+
+    public void generarLaberinto() {
+        Random rnd = new Random();
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[0].length; j++) {
+                matriz[i][j] = (rnd.nextInt(100) < prb) ? '*' : ' ';
             }
         }
+        colocarIniObj(matriz, rnd);
     }
 
-    private void generarInicioFin(){
-        // Generar Inicio
-        int[] tempArray = casillaValida();
-        iniX = tempArray[0];
-        iniY = tempArray[1];
-        matrix[iniY][iniX] = 'I';
-
-
-        // Generar Goal
-        tempArray = casillaValida();
-        objX = tempArray[0];
-        objY = tempArray[1];
-        matrix[objY][objX] = 'G';
+    private void colocarIniObj(char[][] matriz, Random rnd) {
+        do {
+            iniX = rnd.nextInt(matriz[0].length);
+            iniY = rnd.nextInt(matriz.length);
+        } while (matriz[iniY][iniX] != ' ');
+        matriz[iniY][iniX] = 'I';
+        do {
+            objX = rnd.nextInt(matriz[0].length);
+            objY = rnd.nextInt(matriz.length);
+        } while (matriz[objY][objX] != ' ');
+        matriz[objY][objX] = 'G';
     }
 
-    private int[] casillaValida(){
-        int a = ran.nextInt(dimensionX);
-        int b = ran.nextInt(dimensionY);
-        while(matrix[b][a] == '*'){
-            a = ran.nextInt(dimensionX);
-            b = ran.nextInt(dimensionY);
+    // FIXME
+    public void mostrarSolucion(ArrayList<Nodo> solucion) {
+        StringBuilder sb = new StringBuilder("Solucion(");
+        for (Nodo n : solucion) {
+            sb.append(" ").append(n.toString()).append(" ");
         }
-
-        return new int[] {a,b};
-
+        System.out.println(sb.toString());
+        System.out.println(")");
     }
+
+//    public void pintarSolucion(List<Nodo> solucion){
+//        for (Nodo nodo : solucion) {
+//            matrix[nodo.getY()][nodo.getX()] = '+';
+//        }
+//    }
 
     @Override
-    public String toString(){
-        String salida = new String();
-        for(int i = 0; i < matrix.length; i++){
-            salida += Arrays.toString(matrix[i]);
-            salida += "\n";
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[0].length; j++) {
+                sb.append(matriz[i][j]);
+            }
+            sb.append('\n');
         }
-        return salida;
+        return sb.toString();
     }
 
-    public void pintarSolucion(List<Nodo> solucion){
-        for (Nodo nodo : solucion) {
-            matrix[nodo.getY()][nodo.getX()] = '+';
+    public static void main(String[] args) {
+        Laberinto lab = new Laberinto(6,8,30);
+        lab.generarLaberinto();
+        AEstrella alg = new AEstrella(new Nodo(lab.iniX, lab.iniY, null));
+//        aEstrella(lab);
+        System.out.println(lab.toString());
+
+        System.out.println("Nodo inicial: " + (new Nodo(lab.iniX, lab.iniY, null)).toString());
+        System.out.println("Nodo objetivo: " + (new Nodo(lab.objX, lab.objY, null)).toString());
+        System.out.println("Nodos abiertos (nodo inicial): " + alg.abiertos.toString());
+        assert alg.abiertos.peek() != null;
+        System.out.println("Sucesores ini: " + alg.sucesores(alg.abiertos.peek(), lab).toString());
+        assert alg.abiertos.peek() != null;
+        System.out.print("Costes g(n): " + alg.abiertos.peek().getCosteG() + " ");
+        assert alg.abiertos.peek() != null;
+        for (Nodo n : alg.sucesores(alg.abiertos.peek(), lab)) {
+            System.out.print(n.getCosteG() + " ");
+        }
+        System.out.println();
+        assert alg.abiertos.peek() != null;
+        int cnt = 0;
+        for (Nodo n : alg.sucesores(alg.abiertos.peek(), lab)) {
+//            System.out.println(n.toString() + ": " + alg.antecesores(n).toString());
+            System.out.println(n.toString() + ": ");
+            Set<Nodo> M = alg.sucesores(n, lab);
+            System.out.println("\tSucesores: " + M.toString());
+            System.out.println("\tAntecesores: " + alg.antecesores(n));
+            M.removeAll(alg.antecesores(n));
+            System.out.println("\tSucesores sin antecesores: " + M.toString());
+            cnt++;
         }
     }
-
 }
