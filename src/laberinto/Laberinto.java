@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 
 public class Laberinto {
-//    private int dimensionX, dimensionY;
     private String[][] matriz;
     private final int prb;
     private int iniX, iniY, objX, objY;
@@ -16,10 +15,9 @@ public class Laberinto {
     private static final String INICIO = "\033[1;32m" + "I" + "\u001B[0m";
     private static final String OBJETIVO = "\033[1;31m" + "G" + "\u001B[0m";
     private static final String CAMINO = "\033[1;33m" + "+" + "\u001B[0m";
+//    private static final String EXPLORADO = "\033[1;34m" + "-" + "\u001B[0m";  // 34 azul
 
     public Laberinto(int dimensionX, int dimensionY, int prb, int seed) {
-//        this.dimensionX = dimensionX;
-//        this.dimensionY = dimensionY;
         matriz = new String[dimensionX][dimensionY];
         this.prb = prb;
         solucionable = true;
@@ -27,8 +25,6 @@ public class Laberinto {
     }
 
     public Laberinto(int dimensionX, int dimensionY, int prb) {
-//        this.dimensionX = dimensionX;
-//        this.dimensionY = dimensionY;
         matriz = new String[dimensionX][dimensionY];
         this.prb = prb;
         solucionable = true;
@@ -74,7 +70,7 @@ public class Laberinto {
             case 0 -> colocarIniObj(matriz);
             case 1 -> colocarIniObjExtremos(matriz);
             default -> {
-                System.err.println("Opt " + opt + " no disponible - (0/1)");
+                System.err.println("Opt '" + opt + "' no disponible - (0/1)");
                 flag = false;
             }
         }
@@ -100,12 +96,12 @@ public class Laberinto {
         do {
             iniX = rnd.nextInt(matriz[0].length);
             iniY = rnd.nextInt(matriz.length);
-        } while (!matriz[iniY][iniX].equalsIgnoreCase(" "));
+        } while (!matriz[iniY][iniX].equals(" "));
         matriz[iniY][iniX] = INICIO;
         do {
             objX = rnd.nextInt(matriz[0].length);
             objY = rnd.nextInt(matriz.length);
-        } while (!matriz[objY][objX].equalsIgnoreCase(" "));
+        } while (!matriz[objY][objX].equals(" "));
         matriz[objY][objX] = OBJETIVO;
     }
 
@@ -115,14 +111,6 @@ public class Laberinto {
             Nodo n = solucion.get(i);
             matriz[n.getCordY()][n.getCordX()] = CAMINO;
         }
-        // (Opcional) Muestra por pantalla unicamente el camino de I a G
-//        for (int i = 0; i < matriz.length; i++) {
-//            for (int j = 0; j < matriz[0].length; j++) {
-//                if (matriz[i][j] == '*') {
-//                    matriz[i][j] = ' ';
-//                }
-//            }
-//        }
         System.out.println(this);
     }
 

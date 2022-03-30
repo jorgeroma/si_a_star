@@ -40,6 +40,7 @@ public class AEstrella {
                 }
             }
         }
+        // Estado G inaccesible
         if (solucion == null) {
             lab.setSolucionable(false);
             lab.setError(1);

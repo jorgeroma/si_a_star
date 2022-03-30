@@ -7,6 +7,7 @@ import java.util.Comparator;
 
 public class Heuristico {
     private Laberinto lab;
+
     public Heuristico(Laberinto lab) {
         this.lab = lab;
     }
@@ -24,7 +25,8 @@ public class Heuristico {
     public Comparator<Nodo> manhat() {
         return new Comparator<Nodo>() {
             public int h(Nodo n1) {
-                return Math.abs(n1.getCordX() - lab.getObjetivo().getCordX()) + Math.abs(n1.getCordY() - lab.getObjetivo().getCordY());
+                return Math.abs(n1.getCordX() - lab.getObjetivo().getCordX())
+                        + Math.abs(n1.getCordY() - lab.getObjetivo().getCordY());
             }
             @Override
             public int compare(Nodo o1, Nodo o2) {
@@ -37,7 +39,8 @@ public class Heuristico {
     public Comparator<Nodo> eucl() {
         return new Comparator<Nodo>() {
             public double h(Nodo n) {
-                return Math.sqrt(Math.pow(n.getCordX() - lab.getObjetivo().getCordX(), 2) + Math.pow(n.getCordY() - lab.getObjetivo().getCordY(), 2));
+                return Math.sqrt(Math.pow(n.getCordX() - lab.getObjetivo().getCordX(), 2)
+                        + Math.pow(n.getCordY() - lab.getObjetivo().getCordY(), 2));
             }
             @Override
             public int compare(Nodo o1, Nodo o2) {

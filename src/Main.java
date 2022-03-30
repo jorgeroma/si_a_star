@@ -3,19 +3,22 @@ import heuristicos.Heuristico;
 import laberinto.Laberinto;
 
 public class Main {
-    private static final int LAB = 5;
-    private static final int SINSOL = 7;    // Para lab(6,8,30,7)
+    // ArrayLabsSinSol (6*8): [7, 11, 21, 26, 28, 34, 41, 49, 50, 52, 56]
+    // ArrayLabsSinSol (60*80): [8, 9, 50, 90, 96, 132, 136, 162, 163, 172, 178] -> 9, 50, 96, 132 'G' inacc, 90 'I' inacc
+    // Algunos buenos -> Sol: 7, 16, 32, 99, 127     Sin Sol: 9, 90
     public static void main(String[] args) {
-        if (args.length < 2)
+        if (args.length < 3)
             throw new RuntimeException("ERROR: faltan argumentos en main");
-        Laberinto lab = new Laberinto(Integer.parseInt(args[0]),Integer.parseInt(args[1]),30);
-        // Opt 0: aleat Opt 1: extremos | (I/G)
-        if (!lab.generarLaberinto(1)) { // generalLaberinto devuelve 'solucionable'
+
+        Laberinto lab = new Laberinto(Integer.parseInt(args[0]),Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+
+        // Opt 0: pos aleatoria Opt 1: extremos | (I/G)
+        if (!lab.generarLaberinto(0)) { // generarLaberinto devuelve true si opt es valido
             return;
         }
 
         // .ampl() .manhat() .eucl()
-        AEstrella alg = new AEstrella(lab, (new Heuristico(lab)).manhat());
+        AEstrella alg = new AEstrella(lab, (new Heuristico(lab)).ampl());
         System.out.println("Laberinto generado:\n" + lab);
 
         System.out.print("Nodo inicial: " + lab.getInicial().toString());
@@ -28,6 +31,7 @@ public class Main {
             System.out.println("El laberinto tiene solucion:");
             lab.printSolucion(alg.solucion);
             System.out.println("Solucion: " + alg.solucion);
+            System.out.println("Coste Solucion: " + alg.solucion.size());
         } else {
             System.out.println(lab);
             System.out.println("El laberinto no tiene solucion: " + Laberinto.mensaje(lab.getError()));

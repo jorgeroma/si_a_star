@@ -11,7 +11,7 @@ public class Nodo {
     public Nodo(int cordX, int cordY, Nodo padre) {
         this.cordX = cordX;
         this.cordY = cordY;
-        this.costeG = (padre == null) ? -1 : 1 + padre.getCosteG();
+        this.costeG = (padre == null) ? 0 : 1 + padre.getCosteG();
         this.padre = padre;
     }
 
