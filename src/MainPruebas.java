@@ -11,7 +11,7 @@ public class MainPruebas {
         AEstrella alg;
         List<Integer> listaLabs = new LinkedList<>();
         int i = 0, cnt = 0;
-        if (args.length == 0)
+        if (args.length < 2)
             throw new RuntimeException("ERROR: faltan argumentos en main");
         do {
             lab = new Laberinto(Integer.parseInt(args[0]),Integer.parseInt(args[1]),30, i);

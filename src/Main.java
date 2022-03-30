@@ -6,9 +6,11 @@ public class Main {
     private static final int LAB = 5;
     private static final int SINSOL = 7;    // Para lab(6,8,30,7)
     public static void main(String[] args) {
-        Laberinto lab = new Laberinto(6,8,30);
+        if (args.length < 2)
+            throw new RuntimeException("ERROR: faltan argumentos en main");
+        Laberinto lab = new Laberinto(Integer.parseInt(args[0]),Integer.parseInt(args[1]),30);
         // Opt 0: aleat Opt 1: extremos | (I/G)
-        if (!lab.generarLaberinto(0)) { // generalLaberinto devuelve 'solucionable'
+        if (!lab.generarLaberinto(1)) { // generalLaberinto devuelve 'solucionable'
             return;
         }
 

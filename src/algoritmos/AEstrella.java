@@ -70,21 +70,21 @@ public class AEstrella {
 
     public Set<Nodo> sucesores(Nodo node, Laberinto lab) {
         Set<Nodo> suc = new HashSet<>();
-        char[][] matriz = lab.getMatriz();
+        String[][] matriz = lab.getMatriz();
         // Arriba
-        if (node.getCordY() - 1 >= 0 && matriz[node.getCordY() - 1][node.getCordX()] != '*') {
+        if (node.getCordY() - 1 >= 0 && !matriz[node.getCordY() - 1][node.getCordX()].equals("*")) {
             suc.add(new Nodo(node.getCordX() , node.getCordY() - 1, node));
         }
         // Derecha
-        if (node.getCordX() + 1 < matriz[0].length && matriz[node.getCordY()][node.getCordX() + 1] != '*') {
+        if (node.getCordX() + 1 < matriz[0].length && !matriz[node.getCordY()][node.getCordX() + 1].equals("*")) {
             suc.add(new Nodo(node.getCordX() + 1, node.getCordY(), node));
         }
         // Abajo
-        if (node.getCordY() + 1 < matriz.length && matriz[node.getCordY() + 1][node.getCordX()] != '*') {
+        if (node.getCordY() + 1 < matriz.length && !matriz[node.getCordY() + 1][node.getCordX()].equals("*")) {
             suc.add(new Nodo(node.getCordX(), node.getCordY() + 1, node));
         }
         // Izquierda
-        if (node.getCordX() - 1 >= 0 && matriz[node.getCordY()][node.getCordX() - 1] != '*') {
+        if (node.getCordX() - 1 >= 0 && !matriz[node.getCordY()][node.getCordX() - 1].equals("*")) {
             suc.add(new Nodo(node.getCordX() - 1, node.getCordY(), node));
         }
         return suc;
