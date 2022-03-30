@@ -10,7 +10,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        Laberinto lab = new Laberinto(20,15,20);
+        Laberinto lab = new Laberinto(8,6,30, 4);
         Algoritmo al = new Algoritmo(lab, 0, new Heuristico(lab).manhat());
         List<Nodo> s = al.ejecutar();
         lab.pintarSolucion(s);

@@ -11,9 +11,9 @@ import java.util.PriorityQueue;
 public class Algoritmo {
 //    private List<Nodo> abiertos;
     PriorityQueue<Nodo> abiertos;
-    private List<Nodo> cerrados;
-    private Laberinto laberinto;
-    private Nodo objetivo;
+    private final List<Nodo> cerrados;
+    private final Laberinto laberinto;
+    private final Nodo objetivo;
     private int h = 0;
     public Algoritmo(Laberinto laberinto, int h, Comparator<Nodo> heuristico){
         this.laberinto = laberinto;
