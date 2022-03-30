@@ -40,7 +40,10 @@ public class AEstrella {
                 }
             }
         }
-        lab.setSolucionable(solucion != null);
+        if (solucion == null) {
+            lab.setSolucionable(false);
+            lab.setError(1);
+        }
     }
 
     private List<Nodo> camino(Nodo act) {

@@ -11,6 +11,7 @@ public class Laberinto {
     private int prb;
     private int iniX, iniY, objX, objY;
     private boolean solucionable;
+    private int error = 0;
     private Random rnd;
 
     public Laberinto(int dimensionX, int dimensionY, int prb, int seed) {
@@ -51,6 +52,14 @@ public class Laberinto {
         this.solucionable = solucionable;
     }
 
+    public int getError() {
+        return error;
+    }
+
+    public void setError(int error) {
+        this.error = error;
+    }
+
     public boolean generarLaberinto(int opt) {
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[0].length; j++) {
@@ -80,6 +89,11 @@ public class Laberinto {
     }
 
     private void colocarIniObj(char[][] matriz) {
+        if (prb == 100) {
+            setSolucionable(false);
+            error = 2;
+            return;
+        }
         do {
             iniX = rnd.nextInt(matriz[0].length);
             iniY = rnd.nextInt(matriz.length);
@@ -109,6 +123,14 @@ public class Laberinto {
         System.out.println(this);
     }
 
+    public static String mensaje(int error) {
+        return switch (error) {
+            case 1 -> "posicion G inaccesible";
+            case 2 -> "no hay espacio para estados inicial y final";
+            default -> "error desconocido";
+        };
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -120,4 +142,5 @@ public class Laberinto {
         }
         return sb.toString();
     }
+
 }
