@@ -20,7 +20,7 @@ public class AEstrella {
     }
 
     boolean objetivo(Nodo n) {
-        return n.mismaPos(lab.getObjetivo());
+        return n.equals(lab.getObjetivo());
     }
 
     public Queue<Nodo> getAbiertos() {

@@ -18,7 +18,7 @@ public class MainPruebas {
             throw new RuntimeException("ERROR: faltan argumentos en main");
         int prb = Integer.parseInt(args[2]);
         do {
-            lab = new Laberinto(Integer.parseInt(args[0]), Integer.parseInt(args[1]), prb, i);
+            lab = new Laberinto(Integer.parseInt(args[0]), Integer.parseInt(args[1]), prb);
             lab.generarLaberinto(0);
             alg = new AEstrella(lab, (new Heuristico(lab)).ampl());
             alg.ejecutar(lab);

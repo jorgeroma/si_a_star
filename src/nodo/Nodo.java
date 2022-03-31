@@ -39,14 +39,10 @@ public class Nodo {
         this.padre = padre;
     }
 
-    public boolean mismaPos(Nodo n) {
-        return this.cordX == n.cordX && this.cordY == n.cordY;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o instanceof Nodo node) {
-            return this.mismaPos(node);
+            return this.cordX == node.cordX && this.cordY == node.cordY;
         }
         return false;
     }

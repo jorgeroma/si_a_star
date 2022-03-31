@@ -24,9 +24,8 @@ public class Main {
         System.out.print("Nodo inicial: " + lab.getInicial().toString());
         System.out.println(" -> Nodo objetivo: " + lab.getObjetivo().toString());
 
-        if (lab.getSolucionable()) {
-            alg.ejecutar(lab);
-        }
+        alg.ejecutar(lab);
+
         if (lab.getSolucionable()) {
             System.out.println("El laberinto tiene solucion:");
             lab.printSolucion(alg.getSolucion());
