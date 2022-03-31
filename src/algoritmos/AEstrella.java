@@ -19,6 +19,10 @@ public class AEstrella {
         solucion = null;
     }
 
+    boolean objetivo(Nodo n) {
+        return n.mismaPos(lab.getObjetivo());
+    }
+
     public Queue<Nodo> getAbiertos() {
         return abiertos;
     }
@@ -49,10 +53,6 @@ public class AEstrella {
 
     public void setSolucion(List<Nodo> solucion) {
         this.solucion = solucion;
-    }
-
-    boolean objetivo(Nodo n) {
-        return n.mismaPos(lab.getObjetivo());
     }
 
     public void ejecutar(Laberinto lab) {
