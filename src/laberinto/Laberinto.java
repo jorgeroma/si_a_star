@@ -12,10 +12,13 @@ public class Laberinto {
     private boolean solucionable;
     private int error = 0;
     private final Random rnd;
-    private static final String INICIO = "\033[1;32m" + "I" + "\u001B[0m";
-    private static final String OBJETIVO = "\033[1;31m" + "G" + "\u001B[0m";
-    private static final String CAMINO = "\033[1;33m" + "+" + "\u001B[0m";
-//    private static final String EXPLORADO = "\033[1;34m" + "-" + "\u001B[0m";  // 34 azul
+//    private static final String INICIO = "\033[1;32m" + "I" + "\u001B[0m";
+    private static final String INICIO = "\033[42m" + "I" + "\u001B[0m";
+//    private static final String OBJETIVO = "\033[1;31m" + "G" + "\u001B[0m";
+    private static final String OBJETIVO = "\033[41m" + "G" + "\u001B[0m";
+//    private static final String CAMINO = "\033[1;33m" + "+" + "\u001B[0m";
+    private static final String CAMINO = "\033[43m" + "+" + "\u001B[0m";
+//    private static final String OBSTACULO = "\033[40m\033[1;37m" + "*" + "\u001B[0m";
 
     public Laberinto(int dimensionX, int dimensionY, int prb, int seed) {
         matriz = new String[dimensionX][dimensionY];
