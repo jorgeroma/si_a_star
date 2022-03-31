@@ -24,7 +24,7 @@ public class MainPruebas {
             alg.ejecutar(lab);
             if (lab.getSolucionable()) {
                 listaSol.add(i);
-                costes.add(alg.solucion.size());
+                costes.add(alg.getSolucion().size());
             } else {
                 listaNoSol.add(i);
             }

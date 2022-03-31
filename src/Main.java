@@ -29,9 +29,9 @@ public class Main {
         }
         if (lab.getSolucionable()) {
             System.out.println("El laberinto tiene solucion:");
-            lab.printSolucion(alg.solucion);
-            System.out.println("Solucion: " + alg.solucion);
-            System.out.println("Coste Solucion: " + alg.solucion.size());
+            lab.printSolucion(alg.getSolucion());
+            System.out.println("Solucion: " + alg.getSolucion());
+            System.out.println("Coste Solucion: " + alg.getSolucion().size());
         } else {
             System.out.println(lab);
             System.out.println("El laberinto no tiene solucion: " + Laberinto.mensaje(lab.getError()));
