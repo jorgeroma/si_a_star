@@ -14,10 +14,9 @@ public class Main {
         Laberinto lab = new Laberinto(Integer.parseInt(args[0]),Integer.parseInt(args[1]), Integer.parseInt(args[2]));
 
         // Opt 0: pos aleatoria Opt 1: extremos | (I/G)
-        lab.generarLaberinto(0); // generarLaberinto devuelve true si opt es valido
+        lab.generarLaberinto(0);
 
-        // .ampl() .manhat() .eucl()
-        // Heuristico heu = new Amplitud();
+        // Heuristico heu = new Amplitud(); | new Manhattan(); | new Euclidea();
         AEstrella alg = new AEstrella(lab, (new Amplitud()).fcota(lab));
         System.out.println("Laberinto generado:\n" + lab);
 
