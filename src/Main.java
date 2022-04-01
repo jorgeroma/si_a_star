@@ -1,4 +1,5 @@
 import algoritmos.AEstrella;
+import heuristicos.Amplitud;
 import heuristicos.Heuristico;
 import laberinto.Laberinto;
 
@@ -13,12 +14,11 @@ public class Main {
         Laberinto lab = new Laberinto(Integer.parseInt(args[0]),Integer.parseInt(args[1]), Integer.parseInt(args[2]));
 
         // Opt 0: pos aleatoria Opt 1: extremos | (I/G)
-        if (!lab.generarLaberinto(0)) { // generarLaberinto devuelve true si opt es valido
-            return;
-        }
+        lab.generarLaberinto(0); // generarLaberinto devuelve true si opt es valido
 
         // .ampl() .manhat() .eucl()
-        AEstrella alg = new AEstrella(lab, (new Heuristico(lab)).ampl());
+        // Heuristico heu = new Amplitud();
+        AEstrella alg = new AEstrella(lab, (new Amplitud()).fcota(lab));
         System.out.println("Laberinto generado:\n" + lab);
 
         System.out.print("Nodo inicial: " + lab.getInicial().toString());

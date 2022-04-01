@@ -1,4 +1,5 @@
 import algoritmos.AEstrella;
+import heuristicos.Amplitud;
 import heuristicos.Heuristico;
 import laberinto.Laberinto;
 
@@ -20,7 +21,7 @@ public class MainPruebas {
         do {
             lab = new Laberinto(Integer.parseInt(args[0]), Integer.parseInt(args[1]), prb);
             lab.generarLaberinto(0);
-            alg = new AEstrella(lab, (new Heuristico(lab)).ampl());
+            alg = new AEstrella(lab, (new Amplitud()).fcota(lab));
             alg.ejecutar(lab);
             if (lab.getSolucionable()) {
                 listaSol.add(i);

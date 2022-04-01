@@ -3,9 +3,9 @@ package nodo;
 import java.util.Objects;
 
 public class Nodo {
-    private int cordX;
-    private int cordY;
-    private int costeG;
+    private final int cordX;
+    private final int cordY;
+    private final int costeG;
     private Nodo padre;
 
     public Nodo(int cordX, int cordY, Nodo padre) {
@@ -57,12 +57,4 @@ public class Nodo {
         return "(" + cordX + ", " + cordY + ")";
     }
 
-//----Si no almacenace costeG:
-//    private int coste(Nodo n) {
-//        if (n == null) {
-//            return -1;
-//        } else {
-//            return coste(n.padre) + 1;
-//        }
-//    }
 }

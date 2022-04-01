@@ -6,9 +6,9 @@ import nodo.Nodo;
 import java.util.*;
 
 public class AEstrella {
-    private Queue<Nodo> abiertos;
-    private List<Nodo> cerrados;
-    private Laberinto lab;
+    private final Queue<Nodo> abiertos;
+    private final List<Nodo> cerrados;
+    private final Laberinto lab;
     private List<Nodo> solucion;
 
     public AEstrella(Laberinto lab, Comparator<Nodo> heuristico) {
@@ -23,36 +23,8 @@ public class AEstrella {
         return n.equals(lab.getObjetivo());
     }
 
-    public Queue<Nodo> getAbiertos() {
-        return abiertos;
-    }
-
-    public void setAbiertos(Queue<Nodo> abiertos) {
-        this.abiertos = abiertos;
-    }
-
-    public List<Nodo> getCerrados() {
-        return cerrados;
-    }
-
-    public void setCerrados(List<Nodo> cerrados) {
-        this.cerrados = cerrados;
-    }
-
-    public Laberinto getLab() {
-        return lab;
-    }
-
-    public void setLab(Laberinto lab) {
-        this.lab = lab;
-    }
-
     public List<Nodo> getSolucion() {
         return solucion;
-    }
-
-    public void setSolucion(List<Nodo> solucion) {
-        this.solucion = solucion;
     }
 
     public void ejecutar(Laberinto lab) {

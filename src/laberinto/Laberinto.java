@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Laberinto {
-    private String[][] matriz;
+    private final String[][] matriz;
     private final int prb;
     private int iniX, iniY, objX, objY;
     private boolean solucionable;
@@ -62,22 +62,19 @@ public class Laberinto {
         this.error = error;
     }
 
-    public boolean generarLaberinto(int opt) {
+    public void generarLaberinto(int opt) {
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[0].length; j++) {
                 matriz[i][j] = (rnd.nextInt(100) < prb) ? "*" : " ";
             }
         }
-        boolean flag = true;
         switch (opt) {
             case 0 -> colocarIniObj(matriz);
             case 1 -> colocarIniObjExtremos(matriz);
             default -> {
-                System.err.println("Opt '" + opt + "' no disponible - (0/1)");
-                flag = false;
+                throw new RuntimeException("Opt '" + opt + "' no disponible - (0/1)");
             }
         }
-        return flag;
     }
 
     private void colocarIniObjExtremos(String[][] matriz) {
